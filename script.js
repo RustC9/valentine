@@ -1,3 +1,4 @@
+alert("JS working");
 const noBtn = document.getElementById("noBtn");
 const yesBtn = document.getElementById("yesBtn");
 const question = document.getElementById("question");
