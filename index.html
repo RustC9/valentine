@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Valentine</title>
 
   <style>
@@ -11,12 +11,15 @@
       background: #f7dce9;
       font-family: Arial, sans-serif;
     }
+
     .box {
       min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
+      padding: 20px;
     }
+
     .card {
       background: white;
       padding: 30px;
@@ -25,76 +28,100 @@
       text-align: center;
       box-shadow: 0 10px 25px rgba(0,0,0,0.15);
     }
+
+    h2 {
+      margin-bottom: 20px;
+    }
+
+    .btn-wrap {
+      position: relative;
+      height: 60px;
+    }
+
     button {
       padding: 10px 20px;
       border-radius: 20px;
       border: none;
-      margin: 10px;
       font-size: 16px;
+      cursor: pointer;
     }
-    <p id="tease" style="margin-top:15px;color:#666;font-size:14px;"></p>
-    #yes { background: #ff5fa2; color: white; }
-    #no { background: #ccc; position: absolute; }
+
+    #yes {
+      background: #ff5fa2;
+      color: white;
+    }
+
+    #no {
+      background: #ccc;
+      position: absolute;
+      left: 55%;
+    }
+
+    #tease {
+      margin-top: 15px;
+      color: #666;
+      font-size: 14px;
+      min-height: 18px;
+    }
   </style>
 </head>
 
 <body>
-<div class="box">
-  <div class="card">
-    <h2>Meghana, will you be my Valentine?</h2>
-    <div style="position:relative;height:60px;">
-      <button id="yes">Yes</button>
-      <button id="no">No</button>
+  <div class="box">
+    <div class="card">
+      <h2>Meghana, will you be my Valentine?</h2>
+
+      <div class="btn-wrap">
+        <button id="yes">Yes</button>
+        <button id="no">No</button>
+      </div>
+
+      <p id="tease"></p>
     </div>
-    <p id="msg"></p>
   </div>
-</div>
 
 <script>
-const no = document.getElementById("no");
-const yes = document.getElementById("yes");
-const msg = document.getElementById("msg");
-const tease = document.getElementById("tease");
+  const no = document.getElementById("no");
+  const yes = document.getElementById("yes");
+  const tease = document.getElementById("tease");
 
-const lines = [
-  "Are you sure? I make great poha 🍽️",
-  "Think again… this offer expires never 😉",
-  "That ‘No’ looked a little shy 😏",
-  "Plot twist: you actually want to say Yes 💕",
-  "Careful… you’re one click away from happiness 😌"
-];
+  const lines = [
+    "Are you sure? I make great poha 🍽️",
+    "Think again… this offer expires never 😉",
+    "That ‘No’ looked a little shy 😏",
+    "Plot twist: you actually want to say Yes 💕",
+    "Careful… you’re one click away from happiness 😌"
+  ];
 
-let lineIndex = 0;
+  let lineIndex = 0;
 
-function moveNoButton() {
-  const maxX = 200;
-  const maxY = 40;
+  function moveNoButton() {
+    no.style.left = Math.random() * 200 + "px";
+    no.style.top = Math.random() * 30 + "px";
 
-  no.style.left = Math.random() * maxX + "px";
-  no.style.top = Math.random() * maxY + "px";
+    tease.innerText = lines[lineIndex];
+    lineIndex = (lineIndex + 1) % lines.length;
+  }
 
-  tease.innerText = lines[lineIndex];
-  lineIndex = (lineIndex + 1) % lines.length;
-}
+  // Desktop
+  no.addEventListener("mouseenter", moveNoButton);
 
-/* Desktop */
-no.addEventListener("mouseenter", moveNoButton);
+  // Mobile
+  no.addEventListener("touchstart", (e) => {
+    e.preventDefault();
+    moveNoButton();
+  });
 
-/* Mobile */
-no.addEventListener("touchstart", (e) => {
-  e.preventDefault();
-  moveNoButton();
-});
-
-/* Yes button */
-yes.addEventListener("click", () => {
-  document.querySelector(".card").innerHTML = `
-    <h2>Meghana, will you be my Valentine?</h2>
-    <h3>YAY! 🎉</h3>
-    <img src="https://media.giphy.com/media/26ufdipQqU2lhNA4g/giphy.gif"
-         style="width:220px;margin-top:20px;">
-  `;
-});
+  // Yes button
+  yes.addEventListener("click", () => {
+    document.querySelector(".card").innerHTML = `
+      <h2>Meghana, will you be my Valentine?</h2>
+      <h3>YAY! 🎉</h3>
+      <img src="https://media.giphy.com/media/26ufdipQqU2lhNA4g/giphy.gif"
+           style="width:220px;margin-top:20px;">
+    `;
+  });
 </script>
+
 </body>
 </html>
