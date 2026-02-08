@@ -32,6 +32,7 @@
       margin: 10px;
       font-size: 16px;
     }
+    <p id="tease" style="margin-top:15px;color:#666;font-size:14px;"></p>
     #yes { background: #ff5fa2; color: white; }
     #no { background: #ccc; position: absolute; }
   </style>
@@ -53,12 +54,27 @@
 const no = document.getElementById("no");
 const yes = document.getElementById("yes");
 const msg = document.getElementById("msg");
+const tease = document.getElementById("tease");
+
+const lines = [
+  "Are you sure? I make great poha 🍽️",
+  "Think again… this offer expires never 😉",
+  "That ‘No’ looked a little shy 😏",
+  "Plot twist: you actually want to say Yes 💕",
+  "Careful… you’re one click away from happiness 😌"
+];
+
+let lineIndex = 0;
 
 function moveNoButton() {
   const maxX = 200;
   const maxY = 40;
+
   no.style.left = Math.random() * maxX + "px";
   no.style.top = Math.random() * maxY + "px";
+
+  tease.innerText = lines[lineIndex];
+  lineIndex = (lineIndex + 1) % lines.length;
 }
 
 /* Desktop */
@@ -66,7 +82,7 @@ no.addEventListener("mouseenter", moveNoButton);
 
 /* Mobile */
 no.addEventListener("touchstart", (e) => {
-  e.preventDefault();   // CRITICAL
+  e.preventDefault();
   moveNoButton();
 });
 
@@ -75,7 +91,8 @@ yes.addEventListener("click", () => {
   document.querySelector(".card").innerHTML = `
     <h2>Meghana, will you be my Valentine?</h2>
     <h3>YAY! 🎉</h3>
-    <img src="https://media.giphy.com/media/26ufdipQqU2lhNA4g/giphy.gif" style="width:220px;margin-top:20px;">
+    <img src="https://media.giphy.com/media/26ufdipQqU2lhNA4g/giphy.gif"
+         style="width:220px;margin-top:20px;">
   `;
 });
 </script>
