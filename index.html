@@ -50,17 +50,34 @@
 </div>
 
 <script>
-  const no = document.getElementById("no");
-  const yes = document.getElementById("yes");
-  const msg = document.getElementById("msg");
+const no = document.getElementById("no");
+const yes = document.getElementById("yes");
+const msg = document.getElementById("msg");
 
-  no.onmouseover = () => {
-    no.style.left = Math.random()*200 + "px";
-  };
+function moveNoButton() {
+  const maxX = 200;
+  const maxY = 40;
+  no.style.left = Math.random() * maxX + "px";
+  no.style.top = Math.random() * maxY + "px";
+}
 
-  yes.onclick = () => {
-    msg.innerText = "YAY! 🎉";
-  };
+/* Desktop */
+no.addEventListener("mouseenter", moveNoButton);
+
+/* Mobile */
+no.addEventListener("touchstart", (e) => {
+  e.preventDefault();   // CRITICAL
+  moveNoButton();
+});
+
+/* Yes button */
+yes.addEventListener("click", () => {
+  document.querySelector(".card").innerHTML = `
+    <h2>Meghana, will you be my Valentine?</h2>
+    <h3>YAY! 🎉</h3>
+    <img src="https://media.giphy.com/media/26ufdipQqU2lhNA4g/giphy.gif" style="width:220px;margin-top:20px;">
+  `;
+});
 </script>
 </body>
 </html>
