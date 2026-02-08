@@ -1,36 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Be My Valentine</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Valentine</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      background: #f7dce9;
+      font-family: Arial, sans-serif;
+    }
+    .box {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .card {
+      background: white;
+      padding: 30px;
+      width: 320px;
+      border-radius: 16px;
+      text-align: center;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    }
+    button {
+      padding: 10px 20px;
+      border-radius: 20px;
+      border: none;
+      margin: 10px;
+      font-size: 16px;
+    }
+    #yes { background: #ff5fa2; color: white; }
+    #no { background: #ccc; position: absolute; }
+  </style>
+</head>
 
-<style>
-*{box-sizing:border-box;font-family:'Poppins',sans-serif}
-body{
-  margin:0;
-  min-height:100vh;
-  background:#f7dce9;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-.card{
-  background:#fff;width:360px;
-  padding:30px 25px 40px;
-  border-radius:18px;
-  box-shadow:0 12px 30px rgba(0,0,0,.15);
-  text-align:center;position:relative
-}
-.icon{font-size:56px;margin-bottom:10px}
-h1{font-size:20px;font-weight:600;margin-bottom:25px}
-.buttons{position:relative;height:50px}
-button{
-  padding:10px 22px;border-radius:25px;
-  border:none;font-size:15px;cursor:pointer;
-  transition:.2s
-}
-#yes{background:#ff5fa2;color:#fff}
-#yes:hover{transform:scale(1.08)}
-#no{
+<body>
+<div class="box">
+  <div class="card">
+    <h2>Meghana, will you be my Valentine?</h2>
+    <div style="position:relative;height:60px;">
+      <button id="yes">Yes</button>
+      <button id="no">No</button>
+    </div>
+    <p id="msg"></p>
+  </div>
+</div>
+
+<script>
+  const no = document.getElementById("no");
+  const yes = document.getElementById("yes");
+  const msg = document.getElementById("msg");
+
+  no.onmouseover = () => {
+    no.style.left = Math.random()*200 + "px";
+  };
+
+  yes.onclick = () => {
+    msg.innerText = "YAY! 🎉";
+  };
+</script>
+</body>
+</html>
