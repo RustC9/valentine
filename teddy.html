@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Teddy Day</title>
+
+<style>
+:root{
+  --bg:#f6e7ef;
+  --card:#ffffff;
+  --soft:#e8c7d7;
+  --accent:#b87a95;
+}
+
+body{
+  margin:0;
+  min-height:100vh;
+  background:linear-gradient(180deg,var(--bg),#f1d6e3);
+  font-family: Arial, sans-serif;
+}
+
+.container{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+}
+
+.card{
+  background:var(--card);
+  width:340px;
+  padding:30px;
+  border-radius:26px;
+  box-shadow:0 20px 40px rgba(0,0,0,0.15);
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+}
+
+h2{margin-bottom:10px}
+p{color:#555;font-size:14px;line-height:1.4}
+
+button{
+  width:100%;
+  padding:12px;
+  margin-top:18px;
+  border:none;
+  border-radius:18px;
+  background:var(--soft);
+  font-size:14px;
+  cursor:pointer;
+  transition:.2s;
+}
+button:hover{background:#ddb2c7}
+
+.hidden{display:none}
+
+/* Teddy hug animation */
+.hug{
+  animation:hug 1.6s ease-in-out infinite;
+}
+@keyframes hug{
+  0%{transform:scale(1)}
+  50%{transform:scale(1.05)}
+  100%{transform:scale(1)}
+}
+
+/* Reveal image */
+.teddy-img{
+  width:170px;
+  height:170px;
+  object-fit:cover;
+  border-radius:50%;
+  margin-top:16px;
+  box-shadow:0 12px 28px rgba(0,0,0,.3);
+  animation:fadeUp .6s ease;
+}
+
+@keyframes fadeUp{
+  from{opacity:0; transform:translateY(15px)}
+  to{opacity:1; transform:translateY(0)}
+}
+
+/* Soft overlay hug */
+.overlay{
+  position:absolute;
+  inset:0;
+  background:rgba(232,199,215,0.65);
+  backdrop-filter:blur(2px);
+  opacity:0;
+  transition:.6s;
+  z-index:5;
+}
+.overlay.active{opacity:1}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+<div class="card hug" id="card">
+
+<div class="overlay" id="overlay"></div>
+
+<!-- INTRO -->
+<div id="intro">
+  <h2>This teddy is borrowed 🧸</h2>
+  <p>
+    It doesn’t stay on shelves.<br>
+    It only shows up when comfort is needed.
+  </p>
+
+  <button onclick="need()">I need it right now</button>
+</div>
+
+<!-- COMFORT -->
+<div id="comfort" class="hidden">
+  <h2>Okay.</h2>
+  <p>I’m here.</p>
+
+  <img src="teddy-me.jpg" alt="Teddy" class="teddy-img">
+
+  <p style="margin-top:12px;">
+    Happy Teddy Day 🧸
+  </p>
+
+  <button onclick="reveal()">One last thing</button>
+</div>
+
+<!-- FINAL -->
+<div id="final" class="hidden">
+  <p>If I had to choose<br>what this teddy feels like…</p>
+  <h2>You 🫵</h2>
+</div>
+
+</div>
+</div>
+
+<script>
+function need(){
+  overlay.classList.add("active");
+  setTimeout(()=>{
+    intro.classList.add("hidden");
+    comfort.classList.remove("hidden");
+  },600);
+}
+
+function reveal(){
+  comfort.classList.add("hidden");
+  final.classList.remove("hidden");
+}
+</script>
+
+</body>
+</html>
