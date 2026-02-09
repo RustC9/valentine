@@ -1,203 +1,224 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>A Small Study in Taste</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>A Small Study in Taste</title>
 
-  <style>
-    body {
-      margin: 0;
-      background: #f3e1d3;
-      font-family: Arial, sans-serif;
-    }
+<style>
+:root{
+  --cocoa:#6b3e26;
+  --milk:#e6c7a8;
+  --rose:#f7dce9;
+}
 
-    .container {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-    }
+body{
+  margin:0;
+  min-height:100vh;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(180deg, var(--rose), #f2d3be);
+  overflow:hidden;
+}
 
-    .card {
-      background: #fff;
-      width: 340px;
-      padding: 28px;
-      border-radius: 18px;
-      box-shadow: 0 12px 28px rgba(0,0,0,0.15);
-      text-align: center;
-      animation: fadeIn 0.5s ease;
-    }
+.container{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  position:relative;
+  z-index:1;
+}
 
-    h2 {
-      margin-bottom: 16px;
-    }
+.card{
+  background:#fff;
+  width:360px;
+  padding:28px;
+  border-radius:22px;
+  box-shadow:0 20px 40px rgba(0,0,0,0.15);
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+}
 
-    p {
-      color: #555;
-      font-size: 14px;
-    }
+h2{margin:10px 0}
+p{color:#555;font-size:14px}
 
-    .options button {
-      display: block;
-      width: 100%;
-      padding: 12px;
-      margin: 10px 0;
-      border-radius: 12px;
-      border: none;
-      background: #e6c7a8;
-      font-size: 14px;
-      cursor: pointer;
-    }
+button{
+  width:100%;
+  padding:12px;
+  margin:10px 0;
+  border:none;
+  border-radius:14px;
+  background:var(--milk);
+  font-size:14px;
+  cursor:pointer;
+  transition:.2s;
+}
+button:hover{background:#d9b48c}
 
-    .options button:hover {
-      background: #d9b48c;
-    }
+.hidden{display:none}
 
-    .hidden {
-      display: none;
-    }
+/* Melt overlay */
+.melt{
+  position:absolute;
+  top:-120%;
+  left:0;
+  width:100%;
+  height:120%;
+  background:linear-gradient(
+    to bottom,
+    var(--cocoa) 0%,
+    var(--cocoa) 70%,
+    transparent 100%
+  );
+  border-radius:0 0 40% 40%;
+  animation:none;
+  z-index:5;
+}
 
-    .chocolate {
-      font-size: 40px;
-      margin: 10px 0;
-    }
+.melt.active{
+  animation:meltDown 2.2s ease-in forwards;
+}
 
-    .box {
-      margin: 25px auto 0;
-      width: 160px;
-      height: 60px;
-      border-radius: 12px;
-      background: #6b3e26;
-      color: #fff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      font-size: 14px;
-    }
+@keyframes meltDown{
+  0%{top:-120%}
+  70%{top:0}
+  100%{top:120%}
+}
 
-    .reveal {
-      margin-top: 20px;
-      font-size: 20px;
-      font-weight: bold;
-    }
+/* Reveal */
+.reveal{
+  animation:fadeUp .6s ease;
+}
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-  </style>
+.reveal img{
+  width:160px;
+  height:160px;
+  object-fit:cover;
+  border-radius:50%;
+  margin-top:12px;
+  box-shadow:0 10px 25px rgba(0,0,0,.3);
+}
+
+@keyframes fadeUp{
+  from{opacity:0; transform:translateY(15px)}
+  to{opacity:1; transform:translateY(0)}
+}
+
+.box{
+  margin:24px auto 0;
+  width:190px;
+  height:60px;
+  background:var(--cocoa);
+  color:#fff;
+  border-radius:14px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  box-shadow:0 8px 18px rgba(0,0,0,.25);
+  animation:pulse 2s infinite;
+}
+
+@keyframes pulse{
+  0%{transform:scale(1)}
+  50%{transform:scale(1.05)}
+  100%{transform:scale(1)}
+}
+</style>
 </head>
 
 <body>
+
 <div class="container">
-  <div class="card" id="card">
+<div class="card">
 
-    <!-- INTRO -->
-    <div id="intro">
-      <h2>A Small Study in Taste 🍫</h2>
-      <p>Three questions.<br>No right answers.<br>Just instincts.</p>
-      <button onclick="start()">Begin</button>
-    </div>
+<div class="melt" id="melt"></div>
 
-    <!-- QUESTION -->
-    <div id="question" class="hidden">
-      <h2 id="qText"></h2>
-      <div class="options" id="options"></div>
-    </div>
+<!-- INTRO -->
+<div id="intro">
+  <h2>A Small Study in Taste 🍫</h2>
+  <p>Three questions.<br>No right answers.<br>Just instinct.</p>
+  <button onclick="start()">Begin</button>
+</div>
 
-    <!-- RESULT -->
-    <div id="result" class="hidden">
-      <div class="chocolate" id="chocoIcon"></div>
-      <h2 id="chocoTitle"></h2>
-      <p id="chocoDesc"></p>
+<!-- QUESTIONS -->
+<div id="question" class="hidden">
+  <h2 id="qText"></h2>
+  <div id="options"></div>
+</div>
 
-      <div class="box" onclick="reveal()">Guess my favourite chocolate</div>
-      <div class="reveal hidden" id="finalReveal">You 🫵</div>
-    </div>
+<!-- RESULT -->
+<div id="result" class="hidden">
+  <div style="font-size:44px;">🍫</div>
+  <h2 id="title"></h2>
+  <p id="desc"></p>
 
+  <div class="box" onclick="reveal()">Guess my favourite chocolate</div>
+
+  <div id="final" class="hidden reveal">
+    <h3>You 🫵</h3>
+    <img src="her.jpg" alt="You">
   </div>
 </div>
 
+</div>
+</div>
+
 <script>
-  const questions = [
-    {
-      q: "You're drawn more to…",
-      o: ["Quiet cafés & long talks", "Late-night walks & playlists", "Art, books & layers"]
-    },
-    {
-      q: "Your comfort looks like…",
-      o: ["Warm familiarity", "Soft chaos", "Calm confidence"]
-    },
-    {
-      q: "People usually notice your…",
-      o: ["Ease", "Depth", "Presence"]
-    }
-  ];
+const questions=[
+  {q:"You're drawn more to…",o:["Quiet cafés","Late-night walks","Art & layers"]},
+  {q:"Your comfort feels like…",o:["Warm familiarity","Soft chaos","Calm confidence"]},
+  {q:"People notice your…",o:["Ease","Depth","Presence"]}
+];
 
-  let index = 0;
-  let score = 0;
+let i=0, score=0;
 
-  function start() {
-    document.getElementById("intro").classList.add("hidden");
-    document.getElementById("question").classList.remove("hidden");
-    loadQuestion();
+function start(){
+  intro.classList.add("hidden");
+  question.classList.remove("hidden");
+  load();
+}
+
+function load(){
+  qText.innerText=questions[i].q;
+  options.innerHTML="";
+  questions[i].o.forEach((t,idx)=>{
+    let b=document.createElement("button");
+    b.innerText=t;
+    b.onclick=()=>choose(idx);
+    options.appendChild(b);
+  });
+}
+
+function choose(v){
+  score+=v; i++;
+  i<questions.length ? load() : show();
+}
+
+function show(){
+  question.classList.add("hidden");
+  result.classList.remove("hidden");
+
+  if(score<=2){
+    title.innerText="Milk Chocolate";
+    desc.innerText="Comforting, familiar, and quietly reassuring. You make things feel easy.";
+  }else if(score<=4){
+    title.innerText="Hazelnut Praline";
+    desc.innerText="Soft outside, surprising inside. You always have another layer.";
+  }else{
+    title.innerText="Dark Chocolate (70%)";
+    desc.innerText="You don’t rush sweetness. Layered, warm, and confidently understated.";
   }
+}
 
-  function loadQuestion() {
-    document.getElementById("qText").innerText = questions[index].q;
-    const opt = document.getElementById("options");
-    opt.innerHTML = "";
-
-    questions[index].o.forEach((text, i) => {
-      const btn = document.createElement("button");
-      btn.innerText = text;
-      btn.onclick = () => choose(i);
-      opt.appendChild(btn);
-    });
-  }
-
-  function choose(i) {
-    score += i;
-    index++;
-    if (index < questions.length) {
-      loadQuestion();
-    } else {
-      showResult();
-    }
-  }
-
-  function showResult() {
-    document.getElementById("question").classList.add("hidden");
-    document.getElementById("result").classList.remove("hidden");
-
-    const icon = document.getElementById("chocoIcon");
-    const title = document.getElementById("chocoTitle");
-    const desc = document.getElementById("chocoDesc");
-
-    if (score <= 2) {
-      icon.innerText = "🍫";
-      title.innerText = "Milk Chocolate";
-      desc.innerText =
-        "Comforting, familiar, but never boring. You make things feel easy without being simple.";
-    } else if (score <= 4) {
-      icon.innerText = "🍫";
-      title.innerText = "Hazelnut Praline";
-      desc.innerText =
-        "Soft on the outside, surprising inside. There’s always a second note with you.";
-    } else {
-      icon.innerText = "🍫";
-      title.innerText = "Dark Chocolate (70%)";
-      desc.innerText =
-        "You don’t rush sweetness. You let it unfold. Layered, warm, and quietly bold.";
-    }
-  }
-
-  function reveal() {
-    document.getElementById("finalReveal").classList.remove("hidden");
-  }
+function reveal(){
+  melt.classList.add("active");
+  setTimeout(()=>{
+    final.classList.remove("hidden");
+  },1600);
+}
 </script>
 
 </body>
