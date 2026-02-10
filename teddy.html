@@ -46,9 +46,7 @@ button{
   cursor:pointer;
   transition:.2s;
 }
-button:active{
-  transform:scale(0.98);
-}
+button:active{transform:scale(0.98)}
 
 .hidden{display:none}
 
@@ -66,14 +64,25 @@ button:active{
   pointer-events:auto;
 }
 
-/* Image */
-img{
+/* Teddy image */
+.teddy-img{
   width:170px;
   height:170px;
   border-radius:50%;
   object-fit:cover;
   margin-top:16px;
   box-shadow:0 12px 28px rgba(0,0,0,.3);
+}
+
+/* Hug animation */
+.hug{
+  animation:hug 1.2s ease-in-out;
+}
+@keyframes hug{
+  0%{transform:scale(1)}
+  30%{transform:scale(1.08)}
+  60%{transform:scale(0.96)}
+  100%{transform:scale(1)}
 }
 </style>
 </head>
@@ -88,8 +97,9 @@ img{
 <div id="intro">
   <h2>This teddy is borrowed 🧸</h2>
   <p>
-    It doesn’t stay on shelves.<br>
-    It only shows up when comfort is needed.
+    Not store-bought.<br>
+    Slightly awkward.<br>
+    Shows up anyway.
   </p>
   <button id="needBtn">I need it right now</button>
 </div>
@@ -98,15 +108,14 @@ img{
 <div id="comfort" class="hidden">
   <h2>Okay.</h2>
   <p>I’m here.</p>
-  <img src="teddy-me.jpg" alt="Teddy">
+  <img src="teddy-me.jpg" class="teddy-img" id="teddyImg" alt="Teddy">
   <p style="margin-top:12px;">Happy Teddy Day 🧸</p>
   <button id="lastBtn">One last thing</button>
 </div>
 
 <!-- FINAL -->
 <div id="final" class="hidden">
-  <p>If I had to choose what this teddy feels like…</p>
-  <h2>You 🫵</h2>
+  <p>you are softer than any teddy🫣</p>
 </div>
 
 </div>
@@ -120,26 +129,28 @@ document.addEventListener("DOMContentLoaded", () => {
   const overlay = document.getElementById("overlay");
   const needBtn = document.getElementById("needBtn");
   const lastBtn = document.getElementById("lastBtn");
+  const teddyImg = document.getElementById("teddyImg");
 
   function vibrate(pattern){
-    if (navigator.vibrate) {
-      navigator.vibrate(pattern);
-    }
+    if (navigator.vibrate) navigator.vibrate(pattern);
   }
 
   needBtn.addEventListener("click", () => {
-    vibrate(30);                 // gentle tap
+    vibrate(30);
     overlay.classList.add("show");
 
     setTimeout(() => {
       overlay.classList.remove("show");
       intro.classList.add("hidden");
       comfort.classList.remove("hidden");
+
+      teddyImg.classList.add("hug");
+      setTimeout(()=>teddyImg.classList.remove("hug"),1200);
     }, 500);
   });
 
   lastBtn.addEventListener("click", () => {
-    vibrate([20, 40, 20]);       // soft heartbeat
+    vibrate([20,40,20]);
     comfort.classList.add("hidden");
     final.classList.remove("hidden");
   });
