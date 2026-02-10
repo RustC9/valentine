@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Teddy Day</title>
 
 <style>
@@ -51,13 +51,12 @@ button{
   background:var(--soft);
   font-size:14px;
   cursor:pointer;
-  transition:.2s;
 }
 button:hover{background:#ddb2c7}
 
 .hidden{display:none}
 
-/* Teddy hug animation */
+/* Hug animation */
 .hug{
   animation:hug 1.6s ease-in-out infinite;
 }
@@ -67,23 +66,7 @@ button:hover{background:#ddb2c7}
   100%{transform:scale(1)}
 }
 
-/* Reveal image */
-.teddy-img{
-  width:170px;
-  height:170px;
-  object-fit:cover;
-  border-radius:50%;
-  margin-top:16px;
-  box-shadow:0 12px 28px rgba(0,0,0,.3);
-  animation:fadeUp .6s ease;
-}
-
-@keyframes fadeUp{
-  from{opacity:0; transform:translateY(15px)}
-  to{opacity:1; transform:translateY(0)}
-}
-
-/* Soft overlay hug */
+/* Overlay */
 .overlay{
   position:absolute;
   inset:0;
@@ -94,13 +77,23 @@ button:hover{background:#ddb2c7}
   z-index:5;
 }
 .overlay.active{opacity:1}
+
+/* Image */
+.teddy-img{
+  width:170px;
+  height:170px;
+  object-fit:cover;
+  border-radius:50%;
+  margin-top:16px;
+  box-shadow:0 12px 28px rgba(0,0,0,.3);
+}
 </style>
 </head>
 
 <body>
 
 <div class="container">
-<div class="card hug" id="card">
+<div class="card hug">
 
 <div class="overlay" id="overlay"></div>
 
@@ -112,7 +105,7 @@ button:hover{background:#ddb2c7}
     It only shows up when comfort is needed.
   </p>
 
-  <button onclick="need()">I need it right now</button>
+  <button id="needBtn">I need it right now</button>
 </div>
 
 <!-- COMFORT -->
@@ -126,7 +119,7 @@ button:hover{background:#ddb2c7}
     Happy Teddy Day 🧸
   </p>
 
-  <button onclick="reveal()">One last thing</button>
+  <button id="lastBtn">One last thing</button>
 </div>
 
 <!-- FINAL -->
@@ -139,18 +132,27 @@ button:hover{background:#ddb2c7}
 </div>
 
 <script>
-function need(){
+/* DOM references — THIS WAS MISSING */
+const intro = document.getElementById("intro");
+const comfort = document.getElementById("comfort");
+const final = document.getElementById("final");
+const overlay = document.getElementById("overlay");
+
+const needBtn = document.getElementById("needBtn");
+const lastBtn = document.getElementById("lastBtn");
+
+needBtn.addEventListener("click", () => {
   overlay.classList.add("active");
-  setTimeout(()=>{
+  setTimeout(() => {
     intro.classList.add("hidden");
     comfort.classList.remove("hidden");
-  },600);
-}
+  }, 600);
+});
 
-function reveal(){
+lastBtn.addEventListener("click", () => {
   comfort.classList.add("hidden");
   final.classList.remove("hidden");
-}
+});
 </script>
 
 </body>
